@@ -48,8 +48,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hwnd, &ps);
 		Ellipse(hdc, 0, 0, 200, 100);
+		RECT rect;
+		GetClientRect(hwnd, &rect);
+		DrawText(hdc, "hello, Windows", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
 		EndPaint(hwnd, &ps);
 		return 0;
+	case WM_LBUTTONDOWN:
+		MessageBox(hwnd, "haha", "Test!", MB_OK);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
