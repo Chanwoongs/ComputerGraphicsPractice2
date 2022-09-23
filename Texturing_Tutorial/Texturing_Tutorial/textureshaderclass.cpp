@@ -201,6 +201,7 @@ bool TextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd,
 	// 1.0f. Anything outside of that wraps around and is placed between 0.0f and 1.0f. All other 
 	// settings for the sampler state description are defaults.
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	// 텍스처보다 짧으면 어떻게 처리할거냐
     samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
