@@ -1,0 +1,4 @@
+﻿  graphicsclass.cpp
+C:\Users\방찬웅\Desktop\Project\ComputerGraphicsPractice1\ProjectAssignment4\Project Assignment 4\graphicsclass.cpp(54,11): warning C4101: 'baseViewMatrix' :참조되지 않은 지역 변수입니다.
+C:\Users\방찬웅\Desktop\Project\ComputerGraphicsPractice1\ProjectAssignment4\Project Assignment 4\graphicsclass.cpp(479,27): warning C4101: 'modelPosition' :참조되지 않은 지역 변수입니다.
+  Project Assignment 4.vcxproj -> C:\Users\방찬웅\Desktop\Project\ComputerGraphicsPractice1\ProjectAssignment4\Project Assignment 4\Debug\Project Assignment 4.exe
