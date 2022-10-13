@@ -284,6 +284,7 @@ bool GraphicsClass::Render(float rotation)
 		return false;
 	}
 
+	// 알파 블렌딩 글자를 가져올텐데 뒷부분은 블랙, 흰 부분만 가져와야하니까 뒷부분은 배경이니까 가져오지마라, 즉 배경제거
 	// Turn on the alpha blending before rendering the text.
 	m_D3D->TurnOnAlphaBlending();
 
