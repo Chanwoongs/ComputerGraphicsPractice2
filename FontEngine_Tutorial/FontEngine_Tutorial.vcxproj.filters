@@ -120,4 +120,30 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\color.vs">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\font.ps">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\font.vs">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\light.ps">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\light.vs">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\texture.ps">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\texture.vs">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="data\color.ps">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
 </Project>

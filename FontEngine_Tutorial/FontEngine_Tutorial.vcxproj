@@ -177,6 +177,16 @@
     <ClCompile Include="textureclass.cpp" />
     <ClCompile Include="textureshaderclass.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\color.ps" />
+    <None Include="data\color.vs" />
+    <None Include="data\font.ps" />
+    <None Include="data\font.vs" />
+    <None Include="data\light.ps" />
+    <None Include="data\light.vs" />
+    <None Include="data\texture.ps" />
+    <None Include="data\texture.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
