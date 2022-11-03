@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: texture.ps
+////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////
+// GLOBALS //
+// The texture pixel shader has two global variables. The first is Texture2D 
+// shaderTexture which is the texture resource. This will be our texture resource 
+// that will be used for rendering the texture on the model. The second new variable 
+// is the SamplerState SampleType. The sampler state allows us to modify how the 
+// pixels are written to the polygon face when shaded. For example, if the polygon 
+// is really far away and only makes up 8 pixels on the screen then we use the sample 
+// state to figure out which pixels or what combination of pixels will actually be 
+// drawn from the original texture. The original texture may be 256 pixels by 256 pixels 
+// so deciding which pixels get drawn is important to ensure that the texture still 
+// looks decent on the really small polygon face. We will setup the sampler state in 
+// the TextureShaderClass also and then attach it to the resource pointer so this pixel 
+// shader can use it to determine which sample of pixels to draw.
+/////////////
+Texture2D shaderTexture;
+SamplerState SampleType;
+
+
+//////////////
+// TYPEDEFS //
+//////////////
+struct PixelInputType
+{
+    float4 position : SV_POSITION;
+    float2 tex : TEXCOORD0;
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+// The pixel shader has been modified so that it now uses the HLSL sample function. 
+// The sample function uses the sampler state we defined above and the texture 
+// coordinates for this pixel. It uses these two variables to determine and return 
+// the pixel value for this UV location on the polygon face.
+////////////////////////////////////////////////////////////////////////////////
+float4 TexturePixelShader(PixelInputType input) : SV_TARGET
+{
+	float4 textureColor;
+
+
+    // Sample the pixel color from the texture using the sampler at this texture coordinate location.
+    textureColor = shaderTexture.Sample(SampleType, input.tex);
+
+    return textureColor;
+}
