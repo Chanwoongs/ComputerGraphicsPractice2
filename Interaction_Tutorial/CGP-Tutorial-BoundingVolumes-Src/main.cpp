@@ -2061,7 +2061,7 @@ bool LoadObjModel(std::wstring filename,
 	return true;
 }
 
-void CreateSphere(int LatLines, int LongLines)
+void CreateSphere(int LatLines, int LongLines) // x^2 + y^2 + z^2 = r^2
 {
 	NumSphereVertices = ((LatLines-2) * LongLines) + 2;
 	NumSphereFaces  = ((LatLines-3)*(LongLines)*2) + (LongLines*2);
@@ -2246,7 +2246,7 @@ void littleTest(LPCTSTR namet, MYMESH &test1)
 {
 	test1.name = namet;
 }
-bool InitScene()
+bool InitScene() // D3DInitialize
 {
 	MYMESH thebigTest;
 	littleTest(L"hello again", thebigTest);
