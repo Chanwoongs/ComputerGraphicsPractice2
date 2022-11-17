@@ -1,0 +1,96 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: bumpmap.ps
+////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////
+// GLOBALS //
+/////////////
+Texture2D shaderTextures[3];
+SamplerState SampleType;
+
+cbuffer LightBuffer
+{
+	float4 diffuseColor;
+	float4 specularColor;
+	float specularPower;
+	float3 lightDirection;
+};
+
+
+//////////////
+// TYPEDEFS //
+//////////////
+struct PixelInputType
+{
+    float4 position : SV_POSITION;
+    float2 tex : TEXCOORD0;
+   	float3 normal : NORMAL;
+	float3 tangent : TANGENT;
+	float3 binormal : BINORMAL;
+	float3 viewDirection : TEXCOORD1;
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+////////////////////////////////////////////////////////////////////////////////
+float4 SpecMapPixelShader(PixelInputType input) : SV_TARGET
+{
+	float4 textureColor;
+    float4 bumpMap;
+    float3 bumpNormal;
+    float3 lightDir;
+    float lightIntensity;
+    float4 color;
+	float4 specularIntensity;
+    float3 reflection;
+    float4 specular;
+
+    // 이 위치에서 텍스처 픽셀을 샘플링합니다.
+    textureColor = shaderTextures[0].Sample(SampleType, input.tex);
+	
+    // 범프 맵에서 픽셀을 샘플링합니다.
+    bumpMap = shaderTextures[1].Sample(SampleType, input.tex);
+
+    // 정상 값의 범위를 (0, +1)에서 (-1, +1)로 확장합니다.
+    bumpMap = (bumpMap * 2.0f) - 1.0f;
+    
+    // 범프 맵의 데이터에서 법선을 계산합니다.
+    bumpNormal = input.normal + bumpMap.x * input.tangent + bumpMap.y * input.binormal;
+	
+    // 결과 범프 법선을 표준화합니다.
+    bumpNormal = normalize(bumpNormal);
+
+    // 계산을 위해 빛 방향을 반전시킵니다.
+    lightDir = -lightDirection;
+
+    // 범프 맵 일반 값을 기반으로 픽셀의 빛의 양을 계산합니다.
+    lightIntensity = saturate(dot(bumpNormal, lightDir));
+
+    // 확산 색과 광 강도의 양에 따라 최종 확산 색을 결정합니다.
+    color = saturate(diffuseColor * lightIntensity);
+
+    // 최종 범프 라이트 색상과 텍스처 색상을 결합합니다.
+    color = color * textureColor;
+
+	if(lightIntensity > 0.0f)
+    {
+        // specular map texture로부터 픽셀을 샘플링한다.
+        specularIntensity = shaderTextures[2].Sample(SampleType, input.tex);
+
+        // 빛의 강도, 법선 벡터 및 빛의 방향에 따라 반사 벡터를 계산합니다.
+        reflection = normalize(2 * lightIntensity * bumpNormal - lightDir); 
+
+        // 반사 벡터, 시선 방향 및 반사 출력을 기준으로 반사 조명의 양을 결정합니다.
+        specular = pow(saturate(dot(reflection, input.viewDirection)), specularPower);
+
+        // specular map을 사용하여이 픽셀의 반사광의 강도를 결정합니다.
+        specular = specular * specularIntensity;
+		
+        // 출력 색상의 마지막에 반사 컴포넌트를 추가합니다.
+        color = saturate(color + specular);
+    }	
+	
+    return color;
+}
