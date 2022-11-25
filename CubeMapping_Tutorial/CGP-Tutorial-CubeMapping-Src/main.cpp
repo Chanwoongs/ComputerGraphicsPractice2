@@ -122,7 +122,7 @@ ID3D10Blob* SKYMAP_PS_Buffer;
 ID3D11ShaderResourceView* smrv;
 
 ID3D11DepthStencilState* DSLessEqual;
-ID3D11RasterizerState* RSCullNone;
+ID3D11RasterizerState* RSCullNone; // culling mode off
 ///////////////**************new**************////////////////////
 
 using namespace DirectX;
@@ -178,7 +178,7 @@ float camPitch = 0.0f;
 int NumSphereVertices;
 int NumSphereFaces;
 
-XMMATRIX sphereWorld;
+XMMATRIX sphereWorld; // translate matrix
 ///////////////**************new**************////////////////////
 
 XMMATRIX Rotation;
@@ -206,7 +206,7 @@ void UpdateScene(double time);
 
 void UpdateCamera();
 ///////////////**************new**************////////////////////
-void CreateSphere(int LatLines, int LongLines);
+void CreateSphere(int LatLines, int LongLines); // sphere 만드는 함수 (가지고 있으면 좋다)
 ///////////////**************new**************////////////////////
 
 void RenderText(std::wstring text, int inInt);
@@ -1147,6 +1147,8 @@ bool InitScene()
 	// might also end up with a z value of 1.0f. Because of this, we need to make sure that any other objects with 
 	// the same z value or less (closer to the screen) are drawn, and not the pixels from the skybox. We can do this 
 	// by setting the DepthFunc member to D3D11_COMPARISON_LESS_EQUAL.
+	// pixel operation (pixel을 옮길때 옵션을 줘서 효과를 줄 수 있다.)
+	// 배경이기 때문에 가장 마지막에 렌더링 하는 설정
 	D3D11_DEPTH_STENCIL_DESC dssDesc;
 	ZeroMemory(&dssDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 	dssDesc.DepthEnable = true;
