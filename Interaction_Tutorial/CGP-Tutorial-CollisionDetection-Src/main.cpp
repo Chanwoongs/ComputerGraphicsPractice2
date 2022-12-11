@@ -2648,7 +2648,8 @@ void UpdateScene(double time)
 
 	meshWorld = Rotation * Scale * Translation;
 
-	///////////////**************new**************////////////////////
+	///////////////*******
+	// **************////////////////////
 	//Update our thrown bottles position
 	if(bottleFlying)
 	{
